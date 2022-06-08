@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie index{% endblock %}
+
+{% block body %}
+    <h1>Movie index</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-10 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-header text-bg-info">
+                                    <h4 class="card-title ">Films</h4>
+                                    <p class="card-category"> Liste de tous les films produits</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive example-wrapper">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="text-info">
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Titre</th>
+                                                    <th>Description</th>
+                                                    <th>Date de sortie</th>
+                                                    <th class="text-center">actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for movie in movies %}
+                                                <tr>
+                                                    <td>{{ movie.id }}</td>
+                                                    <td>{{ movie.titre }}</td>
+                                                    <td>{{ movie.description }}</td>
+                                                    <td>{{ movie.annee ? movie.annee|date('d-m-Y') : '' }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ path('app_movie_show', {'id': movie.id}) }}"><i class="fa fa-eye"></i></a>
+                                                        <a class="border"> </a><a class="border"> </a>
+                                                        <a href="{{ path('app_movie_edit', {'id': movie.id}) }}"> <i class="fa fa-pen-nib"></i></a>
+                                                        <a class="border"> </a><a class="border"> </a>
+                                                        <a class="text-danger" href="{{ path('app_movie_delete', {'id': movie.id}) }}"> <i class="fa fa-trash-can"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="4">no records found</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                        
+                                    <a class="btn btn-primary" href="{{ path('app_movie_new') }}">Ajouter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

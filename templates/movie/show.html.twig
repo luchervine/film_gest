@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie{% endblock %}
+
+{% block body %}
+    <h1>Movie</h1>
+    <div class="card">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="">
+                                        <h4><b>Titre</b></h4>
+                                        <h5>{{ movie.titre }}</h5>
+                                    </div>
+                                    <div>
+                                        <h4><b>Date de sortie</b></h4>
+                                        <h5>{{ movie.annee|date('d-m-Y') }}</h5>
+                                    </div>
+                                    <div>
+                                        <h4><b>Résumé</b></h4>
+                                        <h5>{{ movie.description }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        {{ include('movie/_delete_form.html.twig') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title ">Directeur et Acteurs</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <h4><b>Directeur</b></h4>
+                                        <h5><a class="_link text-info" href="{{ path('app_director_show', {'id': movie.director.id}) }}">{{ movie.director.nom }}</a></h5>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <div class="list-group list-group-flush">
+                                            <h4><b>Acteurs</b></h4>
+                                            {% for a in movie.actors %}
+                                                <a class="list-group-item" href="{{ path('app_actor_show', {'id': a.id}) }}">
+                                                    {{ a.nom }}
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_movie_index') }}"><i class="fa fa-arrow-left-long"></i>back to list</a>
+{% endblock %}

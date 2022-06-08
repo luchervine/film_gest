@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Director{% endblock %}
+
+{% block body %}
+    <h1>Edit Director</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body col-md-6">
+                                    {{ include('director/_form.html.twig', {'button_label': 'Modifier'}) }}
+                                    <div class="col-md-3 grid-margin stretch-card">
+                                        <div class="border"></div>
+                                        <div class="border"></div>
+                                    </div>
+                                    {{ include('director/_delete_form.html.twig') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_director_index') }}"><i class="fa fa-arrow-left-long"></i>back to list</a>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Movie{% endblock %}
+
+{% block body %}
+    <h1>Create new Movie</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8 grid-margin stretch-card example-wrapper">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-4">
+                                        {{ include('movie/_form.html.twig') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_movie_index') }}"><i class="fa fa-arrow-left-long"></i>back to list</a>
+{% endblock %}

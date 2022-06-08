@@ -1,0 +1,11 @@
+<form method="post" action="{{ path('app_actor_delete', {'id': actor.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    {% if app.request.get('_route') == 'app_actor_show' %}
+    <span class="float-left">
+        <a class="btn btn-primary" href="{{ path('app_actor_edit', {'id': actor.id}) }}">Modifier</a>
+    </span>
+    {% endif %}
+    <span class="float-right">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ actor.id) }}">
+        <button class="btn btn-danger"><i class="fa fa-trash-can"></i> Supprimer</button>
+    </span>
+</form>
