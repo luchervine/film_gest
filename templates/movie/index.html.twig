@@ -3,14 +3,14 @@
 {% block title %}Movie index{% endblock %}
 
 {% block body %}
-    <h1>Movie index</h1>
+    <h1>{% block h1 %} Movie index{% endblock %}</h1>
 
     <div class="card">
         <div class="card-body">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-10 grid-margin stretch-card">
+                        <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-header text-bg-info">
                                     <h4 class="card-title ">Films</h4>
@@ -21,7 +21,7 @@
                                         <table class="table table-striped table-hover">
                                             <thead class="text-info">
                                                 <tr>
-                                                    <th>Id</th>
+                                                    <th>Image</th>
                                                     <th>Titre</th>
                                                     <th>Description</th>
                                                     <th>Date de sortie</th>
@@ -31,7 +31,7 @@
                                             <tbody>
                                             {% for movie in movies %}
                                                 <tr>
-                                                    <td>{{ movie.id }}</td>
+                                                    <td><img src="{{ asset('images/' ~ movie.image) }}" alt="" width="42"></td>
                                                     <td>{{ movie.titre }}</td>
                                                     <td>{{ movie.description }}</td>
                                                     <td>{{ movie.annee ? movie.annee|date('d-m-Y') : '' }}</td>

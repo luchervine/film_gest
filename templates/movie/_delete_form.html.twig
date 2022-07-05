@@ -1,11 +1,25 @@
-<form method="post" action="{{ path('app_movie_delete', {'id': movie.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    {% if app.request.get('_route') == 'app_movie_show' %}
-    <span class="float-left">
-        <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
-    </span>
-    {% endif %}
-    <span class="float-right">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.id) }}">
-        <button class="btn btn-danger"><i class="fa fa-trash-can"></i> Supprimer</button>
-    </span>
+<form
+  method="post"
+  action="{{ path('app_movie_delete', { id: movie.id }) }}"
+  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce film!?');"
+>
+  {% if app.request.get('_route') == 'app_movie_show' %}
+  <span class="float-left">
+    <a
+      class="btn btn-primary"
+      href="{{ path('app_movie_edit', { id: movie.id }) }}"
+      >Modifier</a
+    >
+  </span>
+  {% endif %}
+  <span class="float-right">
+    <input
+      type="hidden"
+      name="_token"
+      value="{{ csrf_token('delete' ~ movie.id) }}"
+    />
+    <button class="btn btn-danger">
+      <i class="fa fa-trash-can"></i> Supprimer
+    </button>
+  </span>
 </form>

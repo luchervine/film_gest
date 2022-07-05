@@ -7,6 +7,7 @@ use App\Form\ActorType;
 use App\Repository\ActorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,65 +15,102 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActorController extends AbstractController
 {
     #[Route('/', name: 'app_actor_index', methods: ['GET'])]
-    public function index(ActorRepository $actorRepository): Response
+    public function index(ActorRepository $actorRepository, RequestStack $requestStack): Response
     {
-        return $this->render('actor/index.html.twig', [
-            'actors' => $actorRepository->findAll(),
-        ]);
+        //get session variable
+        $session = $requestStack->getSession();
+        $user = $session->get('userSession', null);
+        
+        if($user){
+            return $this->render('actor/index.html.twig', [
+                'actors' => $actorRepository->findAll(),
+            ]);
+        }
+        else return $this->redirectToRoute('app_login');
     }
 
     #[Route('/new', name: 'app_actor_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ActorRepository $actorRepository): Response
+    public function new(Request $request, ActorRepository $actorRepository, RequestStack $requestStack): Response
     {
         $actor = new Actor();
         $form = $this->createForm(ActorType::class, $actor);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $actorRepository->add($actor, true);
+        //get session variable
+        $session = $requestStack->getSession();
+        $user = $session->get('userSession', null);
+        
+        if($user){
 
-            return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $actorRepository->add($actor, true);
+    
+                return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+            }
+    
+            return $this->renderForm('actor/new.html.twig', [
+                'actor' => $actor,
+                'form' => $form,
+            ]);
         }
-
-        return $this->renderForm('actor/new.html.twig', [
-            'actor' => $actor,
-            'form' => $form,
-        ]);
+        else return $this->redirectToRoute('app_login');
     }
 
     #[Route('/{id}', name: 'app_actor_show', methods: ['GET'])]
-    public function show(Actor $actor): Response
+    public function show(Actor $actor, RequestStack $requestStack): Response
     {
-        return $this->render('actor/show.html.twig', [
-            'actor' => $actor,
-        ]);
+        //get session variable
+        $session = $requestStack->getSession();
+        $user = $session->get('userSession', null);
+        
+        if($user){
+            return $this->render('actor/show.html.twig', [
+                'actor' => $actor,
+            ]);
+        }
+        else return $this->redirectToRoute('app_login');
     }
 
     #[Route('/{id}/edit', name: 'app_actor_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Actor $actor, ActorRepository $actorRepository): Response
+    public function edit(Request $request, Actor $actor, ActorRepository $actorRepository, RequestStack $requestStack): Response
     {
         $form = $this->createForm(ActorType::class, $actor);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $actorRepository->add($actor, true);
+        //get session variable
+        $session = $requestStack->getSession();
+        $user = $session->get('userSession', null);
+        
+        if($user){
 
-            return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $actorRepository->add($actor, true);
+    
+                return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+            }
+    
+            return $this->renderForm('actor/edit.html.twig', [
+                'actor' => $actor,
+                'form' => $form,
+            ]);
         }
-
-        return $this->renderForm('actor/edit.html.twig', [
-            'actor' => $actor,
-            'form' => $form,
-        ]);
+        else return $this->redirectToRoute('app_login');
     }
 
     #[Route('/{id}', name: 'app_actor_delete', methods: ['POST'])]
-    public function delete(Request $request, Actor $actor, ActorRepository $actorRepository): Response
+    public function delete(Request $request, Actor $actor, ActorRepository $actorRepository, RequestStack $requestStack): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$actor->getId(), $request->request->get('_token'))) {
-            $actorRepository->remove($actor, true);
+        //get session variable
+        $session = $requestStack->getSession();
+        $user = $session->get('userSession', null);
+        
+        if($user){
+            if ($this->isCsrfTokenValid('delete'.$actor->getId(), $request->request->get('_token'))) {
+                $actorRepository->remove($actor, true);
+            }
+    
+            return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->redirectToRoute('app_actor_index', [], Response::HTTP_SEE_OTHER);
+        else return $this->redirectToRoute('app_login');
     }
 }

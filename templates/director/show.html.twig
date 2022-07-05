@@ -1,54 +1,56 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Director{% endblock %}
-
-{% block body %}
-    <h1>Director</h1>
+{% extends 'base.html.twig' %} {% block title %}Productor{% endblock %} {% block
+body %}
+<h1>Productor</h1>
+<div class="card">
+  <div class="card-body">
     <div class="card">
-        <div class="card-body">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="">
-                                        <h4><b>Nom</b></h4>
-                                        <h5>{{ director.nom }}</h5>
-                                    </div>
-                                    <div>
-                                        <h4><b>Date de naissance</b></h4>
-                                        <h5>{{ director.naissance|date('d-m-Y') }}</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        {{ include('director/_delete_form.html.twig') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title ">Films</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div>
-                                        <div class="list-group list-group-flush">
-                                            {% for m in director.movie %}
-                                                <a class="list-group-item" href="{{ path('app_movie_show', {'id': m.id}) }}">
-                                                    {{ m.titre }}
-                                                </a>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              <div class="card-body">
+                <div class="">
+                  <h4><b>Nom</b></h4>
+                  <h5>{{ director.nom }}</h5>
                 </div>
+                <div>
+                  <h4><b>Date de naissance</b></h4>
+                  <h5>{{ director.naissance|date('d-m-Y') }}</h5>
+                </div>
+                <div class="card-body">
+                  {{ include("director/_delete_form.html.twig") }}
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Films</h4>
+              </div>
+              <div class="card-body">
+                <div>
+                  <div class="list-group list-group-flush">
+                    {% for m in director.movie %}
+                    <a
+                      class="list-group-item"
+                      href="{{ path('app_movie_show', { id: m.id }) }}"
+                    >
+                      {{ m.titre }}
+                    </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <a href="{{ path('app_director_index') }}"><i class="fa fa-arrow-left-long"></i>back to list</a>
+<a href="{{ path('app_director_index') }}"
+  ><i class="fa fa-arrow-left-long"></i>back to list</a
+>
 {% endblock %}
